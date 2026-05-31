@@ -19,13 +19,11 @@ async def measure_runtime() -> float:
     """
     start_time = time.perf_counter()
 
-    # asyncio.gather runs all four coroutines concurrently
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension()
-    )
+    # Create a list containing 4 calls to the coroutine
+    tasks = [async_comprehension() for _ in range(4)]
+    
+    # Use the * operator to unpack the list into asyncio.gather
+    await asyncio.gather(*tasks)
 
     end_time = time.perf_counter()
     return end_time - start_time
