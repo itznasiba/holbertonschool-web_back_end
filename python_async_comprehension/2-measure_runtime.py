@@ -21,7 +21,7 @@ async def measure_runtime() -> float:
 
     # Create a list containing 4 calls to the coroutine
     tasks = [async_comprehension() for _ in range(4)]
-    
+
     # Use the * operator to unpack the list into asyncio.gather
     await asyncio.gather(*tasks)
 
