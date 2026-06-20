@@ -63,7 +63,7 @@ class Server:
         """
         # Fetch the requested data page using get_page (handles assertions too)
         data = self.get_page(page, page_size)
-        
+
         # Calculate total records and total pages
         total_records = len(self.dataset())
         total_pages = math.ceil(total_records / page_size)
