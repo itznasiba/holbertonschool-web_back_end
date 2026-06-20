@@ -4,7 +4,7 @@ python function that returns tuple size
 """
 
 
-def index_range(page:int, page_size:int)->tuple[int, int]:
+def index_range(page: int, page_size: int) -> tuple[int, int]:
     """
     Calculate the start and end indexes for a given page and page size.
 
@@ -18,4 +18,3 @@ def index_range(page:int, page_size:int)->tuple[int, int]:
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
     return (start_index, end_index)
-
