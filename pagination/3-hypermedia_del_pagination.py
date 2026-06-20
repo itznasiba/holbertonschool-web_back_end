@@ -41,32 +41,26 @@ class Server:
         """
         Retrieves a page of data starting from a specific index, resilient
         to deletions between reads.
-
-        Args:
-            index (int): The current start index of the return page.
-            page_size (int): The number of items to return on the page.
-
-        Returns:
-            Dict: A dictionary containing pagination metadata and data.
         """
         indexed_data = self.indexed_dataset()
+        total_len = len(self.dataset())
 
         # Verify index is within valid range
-        assert index is not None and 0 <= index < len(self.dataset())
+        assert index is not None and 0 <= index < total_len
         assert isinstance(page_size, int) and page_size > 0
 
         data = []
         current_index = index
 
-        # Keep searching for records until we have collected 'page_size' elements
-        while len(data) < page_size and current_index < len(self.dataset()):
+        # Keep searching for records until page_size elements are collected
+        while len(data) < page_size and current_index < total_len:
             item = indexed_data.get(current_index)
             if item is not None:
                 data.append(item)
             current_index += 1
 
-        # The 'next_index' is where the loop ended (the next index to query)
-        next_index = current_index if current_index < len(self.dataset()) else None
+        # Determine next index
+        next_index = current_index if current_index < total_len else None
 
         return {
             'index': index,
