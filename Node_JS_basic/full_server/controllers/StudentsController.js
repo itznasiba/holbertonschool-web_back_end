@@ -4,11 +4,10 @@ class StudentsController {
   static getAllStudents(request, response) {
     const dbFile = process.argv[2];
 
-    readDatabase(dbFile)
+    return readDatabase(dbFile)
       .then((fields) => {
         const output = ['This is the list of our students'];
 
-        // Case-insensitive alphabetical sort of field names
         const sortedFields = Object.keys(fields).sort((a, b) => (
           a.toLowerCase().localeCompare(b.toLowerCase())
         ));
@@ -20,9 +19,7 @@ class StudentsController {
 
         return response.status(200).send(output.join('\n'));
       })
-      .catch(() => {
-        return response.status(500).send('Cannot load the database');
-      });
+      .catch(() => response.status(500).send('Cannot load the database'));
   }
 
   static getAllStudentsByMajor(request, response) {
@@ -34,16 +31,13 @@ class StudentsController {
 
     const dbFile = process.argv[2];
 
-    readDatabase(dbFile)
+    return readDatabase(dbFile)
       .then((fields) => {
         const names = fields[major] || [];
         return response.status(200).send(`List: ${names.join(', ')}`);
       })
-      .catch(() => {
-        return response.status(500).send('Cannot load the database');
-      });
+      .catch(() => response.status(500).send('Cannot load the database'));
   }
 }
 
 export default StudentsController;
-export { StudentsController };
